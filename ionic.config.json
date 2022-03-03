@@ -1,0 +1,7 @@
+{
+  "name": "BluetoothAC",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
