@@ -1,12 +1,105 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { BluetoothSerial } from '@awesome-cordova-plugins/bluetooth-serial/ngx';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  providers: [BluetoothSerial]
 })
 export class HomePage {
+  Devices: any;
+  SwitchButton : Boolean = false;
+  constructor(private bserial: BluetoothSerial,
+    private alertCtrl: AlertController,private routing: Router) {}
 
-  constructor() {}
 
+  bluetooth_on(){
+    this.bserial.isEnabled().then(response =>{
+      this.alert("Bluetooth Attivo")
+      this.listDevices();
+    },error =>{
+      this.alert("Bluetooth Disattivo")
+    })
+  }
+
+  async alert(msg){
+    const alert = await this.alertCtrl.create({
+      header: 'Alert',
+      message: msg,
+      buttons:[{
+        text: 'Ok',
+        handler: () =>{
+          this.alertCtrl.dismiss();
+        }
+      }]
+    });
+    await alert.present();
+  }
+
+  listDevices(){
+    this.bserial.list().then(response=>{
+      this.Devices = response;
+    },error=>{
+      console.log("error");
+    })
+  }
+
+  connect(address){
+    this.bserial.connect(address).subscribe(success=>{
+      this.alert("Connected");
+      this.SwitchButton = true;
+    },error=>{
+      console.log("error");
+    })
+  }
+
+  disconnected(){
+    this.bserial.disconnect().then(()=>{
+     this.alert("Disconnected");
+    })
+  }
+
+  sendUp(){
+    this.bserial.write('w').then(response=>{
+      this.alert("Message sent");
+    },error=>{
+      console.log("problem occurred");
+    })
+  }
+  sendDown(){
+    this.bserial.write('s').then(response=>{
+      this.alert("Message sent");
+    },error=>{
+      console.log("problem occurred");
+    })
+  }
+  sendLeft(){
+    this.bserial.write('a').then(response=>{
+      this.alert("Message sent");
+    },error=>{
+      console.log("problem occurred");
+    })
+  }
+  sendRight(){
+    this.bserial.write('d').then(response=>{
+      this.alert("Message sent");
+    },error=>{
+      console.log("problem occurred");
+    })
+  }
+
+
+
+  deviceConnected(){
+    this.bserial.subscribe('/n').subscribe(success=>{
+      this.handler(success);
+    })
+  }
+
+  handler(value){
+    console.log(value);
+  }
 }

@@ -1,20 +1,43 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Bluetooth App Arduino
     </ion-title>
+      <ion-button (click)="bluetooth_on()" slot="end">
+        <ion-icon name="Bluetooth"></ion-icon>
+        <p>Scan</p>
+      </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <ion-list>
+    <ion-card-content ion-iten *ngFor="let data of Devices">
+      <p>NAME: {{data.name}}</p>
+      <p>ADDRESS: {{data.id}}</p>
+      <div *ngIf="!SwitchButton">
+      <ion-button (click)="connect(data.address)">
+        <p>Connect</p>
+        <ion-icon name="bluetooth-outline"></ion-icon>
+      </ion-button>
+      </div>
+      <div *ngIf="!!SwitchButton">
+        <div *ngIf="data.address=='98:D3:71:F6:45:3C'">
+          <ion-button (click)="sendUp()">
+            <ion-icon name="arrow-up-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="sendLeft()">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="sendDown()">
+            <ion-icon name="arrow-down-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="sendRight()">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-list>
 </ion-content>
