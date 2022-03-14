@@ -18,10 +18,10 @@ export class HomePage {
 
   bluetooth_on(){
     this.bserial.isEnabled().then(response =>{
-      this.alert("Bluetooth Attivo")
+      this.alert("Bluetooth On")
       this.listDevices();
     },error =>{
-      this.alert("Bluetooth Disattivo")
+      this.alert("Bluetooth Off")
     })
   }
 
@@ -65,29 +65,61 @@ export class HomePage {
   sendUp(){
     this.bserial.write('w').then(response=>{
       this.alert("Message sent");
-    },error=>{
-      console.log("problem occurred");
+    }).catch(error=>{
+      this.bserial.write('w').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.bserial.write('w').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.alert("Error Occurred");
     })
   }
   sendDown(){
     this.bserial.write('s').then(response=>{
       this.alert("Message sent");
-    },error=>{
-      console.log("problem occurred");
+    }).catch(error=>{
+      this.bserial.write('s').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.bserial.write('s').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.alert("Error Occurred");
     })
   }
   sendLeft(){
     this.bserial.write('a').then(response=>{
       this.alert("Message sent");
-    },error=>{
-      console.log("problem occurred");
+    }).catch(error=>{
+      this.bserial.write('a').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.bserial.write('a').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.alert("Error Occurred");
     })
   }
   sendRight(){
     this.bserial.write('d').then(response=>{
       this.alert("Message sent");
-    },error=>{
-      console.log("problem occurred");
+    }).catch(error=>{
+      this.bserial.write('d').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.bserial.write('d').then(response=>{
+        this.alert("Message sent");
+      })
+    }).catch(error=>{
+      this.alert("Error Occurred");
     })
   }
 
